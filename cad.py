@@ -10,17 +10,29 @@ id = 0
 
 def menu():
     sel = int(input('''
-                Seja bem-vindo ao cadastro de animais doméstimos
-                1 - Cadastrar animais
-                2 - Remover animais
-                3 - Editar lista
-                4 - Visualizar lista'''))
+Seja bem-vindo ao cadastro de animais domésticos
+1 - Cadastrar animais
+2 - Remover animais
+3 - Editar lista
+4 - Visualizar lista
+5 - Sair
+Escolha uma opção: '''))
+    
     options = {
         1: cadastrar,
         2: remover,
         3: editar,
         4: visualizar,
     }
+    
+    if sel in options:
+        options[sel]()
+    elif sel == 5:
+        print("Saindo do programa...")
+        exit()
+    else:
+        print("Opção inválida. Tente novamente.")
+        menu()
 
 def cadastrar():
     global id
@@ -42,13 +54,20 @@ def cadastrar():
 def remover():
     global id
     i = 0
-    max = int(db.len)
+    max = map(int, len(db))
     while i < max:
-        print("\n".join([f"ID: {item['id']}, Animal: {item['animal']}, Raça: {item['raca']}, Idade: {item['idade']}, Peso: {item['peso']}" for item in db]))
+        for item in db:
+            print(f'''
+{item['id']}.
+Animal: {item['animal']},
+Raça: {item['raca']},
+Idade: {item['idade']}, 
+Peso: {item['peso']}
+            ''')
         i += 1
     
     selRem = input('Digite a ID do animal que deseja remover: ')
-    db.remove[selRem - 1]
+    db.remove[selRem + 1]
     ans = input('Deseja retornar ao menu inicial? (y/n)')
     if (ans == 'y'):
         menu()
@@ -59,7 +78,7 @@ def remover():
 def editar():
     global id
     i = 0
-    max = int(db.len)
+    max = int(len(db))
     while i < max:
         print("\n".join([f"ID: {item['id']}, Animal: {item['animal']}, Raça: {item['raca']}, Idade: {item['idade']}, Peso: {item['peso']}" for item in db]))
         i += 1
@@ -68,14 +87,19 @@ def editar():
         menu()
     else:
         pass
-    
-
 
 def visualizar():
     i = 0
-    max = int(db.len)
+    max = int(len(db))
     while i < max:
-        print("\n".join([f"ID: {item['id']}, Animal: {item['animal']}, Raça: {item['raca']}, Idade: {item['idade']}, Peso: {item['peso']}" for item in db]))
+        for item in db:
+            print(f'''
+{item['id']}.
+Animal: {item['animal']},
+Raça: {item['raca']},
+Idade: {item['idade']}, 
+Peso: {item['peso']}
+            ''')
         i += 1
     ans = input('Deseja retornar ao menu inicial? (y/n)')
     if (ans == 'y'):
